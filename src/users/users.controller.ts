@@ -1,10 +1,8 @@
 import {
   Controller,
-  Body,
   Get,
   Query,
   Param,
-  Patch
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Payload } from 'src/common/decorators';

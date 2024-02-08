@@ -1,5 +1,6 @@
-import { IsNumber, IsOptional, IsString } from "class-validator"
-
+import {IsInt, IsOptional, IsString } from "class-validator"
+import {Type} from 'class-transformer'
+ 
 export class QueryDto {
   @IsOptional()
   @IsString()
@@ -10,22 +11,27 @@ export class QueryDto {
   lastname: string
 
   @IsOptional()
-  @IsNumber()
+  @IsInt()
+  @Type(() => Number)
   age: number
 
   @IsOptional()
-  @IsNumber()
+  @IsInt()
+  @Type(() => Number)
   page: number
 
   @IsOptional()
-  @IsNumber()
+  @IsInt()
+  @Type(() => Number)
   pageSize: number
 
   @IsOptional()
-  @IsNumber()
+  @IsInt()
+  @Type(() => Number)
   maxAge: number
 
   @IsOptional()
-  @IsNumber()
+  @IsInt()
+  @Type(() => Number)
   minAge: number
 }
