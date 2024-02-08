@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int             @id @default(autoincrement())
+  username         String          @unique
+  hash             String
+  fname            String?
+  lname            String?
+  age              Int?
+  avatar           String?
+  role             Role            @default(User)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  sentRequests     Friendship[] @relation("SentRequests")
+  receivedRequests Friendship[] @relation("ReceivedRequests")
+
+  @@index([fname, lname, age])
+}
+
+model Friendship {
+  id         String   @id @default(uuid())
+  Sender     User     @relation("SentRequests", fields: [senderId], references: [id])
+  senderId   Int
+  Receiver   User     @relation("ReceivedRequests", fields: [receiverId], references: [id])
+  receiverId Int
+  status     Status   @default(Pending)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+enum Role {
+  User
+  Admin
+}
+
+enum Status {
+  Pending
+  Rejected
+  Accepted
+}
