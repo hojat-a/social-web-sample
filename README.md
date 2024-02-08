@@ -86,7 +86,7 @@ Technical aspect of the project :
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/hojat-a/file-sharing-demo.git
+   git clone https://github.com/hojat-a/social-web-sample.git
    ```
 2. Create a `.env` file, copy `.env.example` contents and set your configs.
   
