@@ -7,7 +7,7 @@ export class MyNetworkRepository {
 
   async addFriendRequest(targetId: number, userId: number) {
     try {
-      const newFriendRequest = await this.pg.friendRequest.create({
+      const newFriendRequest = await this.pg.friendship.create({
         data: {
           senderId: userId,
           receiverId: targetId
@@ -24,7 +24,7 @@ export class MyNetworkRepository {
 
   async fetchFriendRequestByUsers(targetId: number, userId: number) {
     try {
-      const friendRequest = await this.pg.friendRequest.findFirst({
+      const friendRequest = await this.pg.friendship.findFirst({
         where: {
           OR: [
             {
@@ -53,7 +53,7 @@ export class MyNetworkRepository {
 
   async fetchFriendRequestById(requestId: string) {
     try {
-      const friendRequest = await this.pg.friendRequest.findUnique({
+      const friendRequest = await this.pg.friendship.findUnique({
         where: {
           id: requestId
         }
@@ -67,7 +67,7 @@ export class MyNetworkRepository {
   async fetchSentFriendRequests(userId, { page, pageSize }) {
     try {
       const skip = (page - 1) * pageSize;
-      const sentRequestData = await this.pg.friendRequest.findMany({
+      const sentRequestData = await this.pg.friendship.findMany({
         where: {
           senderId: userId,
           status: "Pending"
@@ -99,7 +99,7 @@ export class MyNetworkRepository {
   async fetchReceivedFriendRequests(userId, { page, pageSize }) {
     try {
       const skip = (page - 1) * pageSize;
-      const receivedFriendRequests = await this.pg.friendRequest.findMany({
+      const receivedFriendRequests = await this.pg.friendship.findMany({
         where: {
           receiverId: userId,
           status: "Pending"
@@ -130,7 +130,7 @@ export class MyNetworkRepository {
 
   async updateFriendRequestStatus(userId, requestId, status) {
     try {
-      return await this.pg.friendRequest.update({
+      return await this.pg.friendship.update({
         where: {
           id: requestId,
           receiverId: userId
@@ -147,7 +147,7 @@ export class MyNetworkRepository {
   async fetchFriendsList(userId, { page, pageSize }) {
     try {
       const skip = (page - 1) * pageSize;
-      const friends = await this.pg.friendRequest.findMany({
+      const friends = await this.pg.friendship.findMany({
         where: {
           OR: [
             { senderId: userId },
